@@ -46,12 +46,18 @@ Generate an application key:
 
 php artisan key:generate
 
-Database Migration
+Database Migration 
+
 Run the following command to migrate the database:
 
 php artisan migrate --seed
+
 6. npm install
+
 Login Details
+
 Default login details for testing purposes:
-•  Admin Email: dhasmom01@gmail.com
+
+•  Admin Email: dhasmom01@gmail.com 
+
 •  Admin Password: 110011
