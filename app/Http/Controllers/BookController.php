@@ -134,7 +134,7 @@ class BookController extends Controller
             ]);
             if ($result) {
 
-                return redirect()->to('/books')->with('success', 'Book Deleted Successfully');
+                return redirect()->back()->with('success', 'Book Deleted Successfully');
             }
 
             return redirect()->back()->with('warning', 'Failed to Delete book');

@@ -1,9 +1,20 @@
 <script setup>
     import SimpleLayout from '@/Layouts/SimpleLayout.vue';
-    import { Head ,Link} from '@inertiajs/vue3';
+    import { Head ,Link,useForm} from '@inertiajs/vue3';
     defineProps({
         books:[Array,Object]
     })
+
+
+        const bookForm = useForm({})
+    
+      const deleteBook = (bookId) => {
+        if(confirm('Are you sure you want to delete this book?')){
+            bookForm.delete(route('books.destroy',bookId));
+        }
+        
+    }
+
 </script>
 <template>
     <Head title="Book List" />
@@ -37,7 +48,7 @@
                             <td class="py-2 px-4 border">
                                <Link :href="route('books.show',book.id)" class="bg-blue-600 text-white px-2 py-2 rounded mr-2 inline-block">Detail</Link> 
                                 <Link :href="route('books.edit',book.id)" class="bg-yellow-400 text-white px-2 py-2 rounded mr-2 inline-block">Edit</Link>
-                                <Link :href="route('books.destroy',book.id)" class="bg-red-400 text-white px-2 py-2 rounded mr-2 inline-block">Delete</Link>
+                                <button @click="deleteBook(book.id)" class="bg-red-400 text-white px-2 py-2 rounded mr-2 inline-block">Delete</button>
                             </td>
                         </tr>
                     </tbody>
