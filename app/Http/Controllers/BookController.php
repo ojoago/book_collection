@@ -16,7 +16,7 @@ class BookController extends Controller
     public function index()
     {
         //
-        $books = Book::paginate(20);
+        $books = Book::where('deleted',0)->paginate(20);
         return Inertia::render('Books/Index',['books' => $books]);
     }
 
@@ -39,15 +39,17 @@ class BookController extends Controller
             'title' => 'required|string|max:255|unique:books' ,
             'author' => 'required|string|max:255' ,
             'published_year' => 'required' ,
-            'description' => 'required|string'
+            'description' => 'required|string' ,
+            'status' => 'required'
         ]);
         try {
 
             $result = Book::create([
                 'title' => $request->title ,
                 'author' => $request->author ,
-                'published_year' => date('Y', strtotime($request->published_year)) ,
+                'published_year' => $request->published_year ,
                 'description' => $request->description ,
+                'status' => $request->status ,
             ]);
 
             if($result){
@@ -94,7 +96,8 @@ class BookController extends Controller
             })  ],
             'author' => 'required|string|max:255',
             'published_year' => 'required',
-            'description' => 'required|string'
+            'description' => 'required|string' ,
+            'status' => 'required' ,
         ]);
 
         try {
@@ -102,8 +105,9 @@ class BookController extends Controller
             $result = $book->update([
                 'title' => $request->title,
                 'author' => $request->author,
-                'published_year' => date('Y', strtotime($request->published_year)),
+                'published_year' => $request->published_year,
                 'description' => $request->description,
+                'status' => $request->status,
             ]);
 
             if ($result) {
@@ -122,8 +126,21 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
-        //
+        try {
+            $result = $book->update([
+                'deleted' => 1,
+            ]);
+            if ($result) {
+
+                return redirect()->to('/books')->with('success', 'Book Deleted Successfully');
+            }
+
+            return redirect()->back()->with('warning', 'Failed to Delete book');
+        } catch (\Throwable $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Something Went Wrong Error Logged!!!');
+        }
     }
 }

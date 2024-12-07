@@ -4,14 +4,23 @@
         import InputError from '@/Components/InputError.vue';
     import InputLabel from '@/Components/InputLabel.vue';
     import TextInput from '@/Components/TextInput.vue';
+    import BaseSelect from '@/Components/BaseSelect.vue';
+
 
     const bookForm = useForm({
         'title' : '' ,
         'author' : '' ,
         'published_year' : '' ,
         'description' : '' ,
-
+        'status' : ''
     })
+
+    const status = [
+        {"id":  "available", "text": "available"},
+        {"id":  "borrowed", "text": "borrowed"},
+        {"id":  "reserved", "text": "reserved"},
+    ]
+
     
     const addBook = () => {
         const response = bookForm.post(route('books.store'));
@@ -33,7 +42,7 @@
 
             <form @submit.prevent="addBook()">
 
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                      <div>
                         <InputLabel for="text" value="Title" />
@@ -78,6 +87,12 @@
 
                         <InputError class="mt-2" :message="bookForm.errors.published_year" />
                     </div>
+                    <div>
+                        <BaseSelect v-model="bookForm.status" label="Status" :selected="bookForm.status"
+                                                :options="status"/>
+
+                        <InputError class="mt-2" :message="bookForm.errors.published_year" />
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 ">
                      <div>
@@ -94,7 +109,10 @@
                         <InputError class="mt-2" :message="bookForm.errors.description" />
                     </div>
                 </div>
-                <button :href="route('books.create')" class="bg-green-400 text-white px-4 py-2 rounded mr-2 mt-3">Submit</button>
+                <button :href="route('books.create')" :disabled="bookForm.processing"  class="bg-green-400 text-white px-4 py-2 rounded mr-2 mt-3">
+                    <span v-if="bookForm.processing">Submitting...</span>
+                    <span v-else>Submit</span>
+                </button>
 
                 
             </form>

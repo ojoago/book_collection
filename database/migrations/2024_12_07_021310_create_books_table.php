@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->text('description');
-            $table->integer('published_year');
+            $table->string('published_year',20);
             $table->string('status',32)->default('available');
             // $table->enum('status', ['available', 'borrowed', 'reserved']);
             $table->tinyInteger('deleted')->default(0);

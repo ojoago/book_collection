@@ -37,7 +37,7 @@
 
 </script>
 <template>
-    <Head title="Create Book" />
+    <Head title="Update Book" />
 
     <SimpleLayout>
          <div class="mt-4 mx-4">
@@ -119,7 +119,13 @@
                         <InputError class="mt-2" :message="bookForm.errors.description" />
                     </div>
                 </div>
-                <button class="bg-yellow-400 text-white px-4 py-2 rounded mr-2 mt-3">Update </button>
+                <button :disabled="bookForm.processing" class="bg-yellow-400 text-white px-4 py-2 rounded mr-2 mt-3">
+
+                     
+                    <span v-if="bookForm.processing">Updating...</span>
+                    <span v-else>Update</span>
+                
+                </button>
 
                 
             </form>

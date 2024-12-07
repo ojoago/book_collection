@@ -31,7 +31,7 @@
                             <td class="py-2 px-4 border">{{ loop+1 }}</td>
                             <td class="py-2 px-4 border">{{ book?.title }}</td>
                             <td class="py-2 px-4 border">{{ book?.author }}</td>
-                            <td class="py-2 px-4 border">{{ book?.published_year }}</td>
+                            <td class="py-2 px-4 border">{{ book?.year }}</td>
                             <td class="py-2 px-4 border">{{ book?.description }}</td>
                             <td class="py-2 px-4 border">{{ book?.status }}</td>
                             <td class="py-2 px-4 border">
