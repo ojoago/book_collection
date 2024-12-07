@@ -38,6 +38,7 @@ DB_CONNECTION=sqlite
 
 5. 
 create sqlite database file
+
 touch database/database.sqlite
 
 6. 
